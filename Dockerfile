@@ -1,4 +1,4 @@
-FROM ubuntu:16.10
+FROM ubuntu:22.04
 # for raspberryPi
 #FROM hypriot/rpi-node
 
@@ -28,6 +28,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install npm
 
 COPY . /src
 RUN cd /src; npm install
+LABEL org.opencontainers.image.description RESTBLUE
+LABEL org.opencontainers.image.source=https://github.com/datasance/restblue
+LABEL org.opencontainers.image.licenses=EPL2.0
 
 CMD ["node", "/src/index.js"]
 #for DEBUG
