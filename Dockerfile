@@ -13,7 +13,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install libudev-dev
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install nodejs
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -y install npm
-RUN ln -s /usr/bin/nodejs /usr/bin/node
+#RUN ln -s /usr/bin/nodejs /usr/bin/node
 #FROM alpine:latest
 # for raspberryPi
 #FROM armhf/alpine
