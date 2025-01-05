@@ -10,7 +10,7 @@
  *******************************************************************************
 */
 
-var noble = require('noble');
+var noble = require('@stoprocent/noble');
 var http = require('http');
 var url = require('url');
 

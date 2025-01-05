@@ -10,7 +10,7 @@
  *******************************************************************************
 */
 
-var noble = require('noble');
+var noble = require('@stoprocent/noble');
 var utils = require('./utils');
 
 const CHARACTERISTIC_NOT_FOUND_CODE = 'CHARACTERISTIC_NOT_FOUND';
