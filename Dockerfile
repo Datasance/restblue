@@ -1,22 +1,20 @@
-FROM python:3.9.21-alpine3.21 AS build-stage
+FROM node:iron-bookworm AS build-stage
 
-# Install necessary Alpine packages
-RUN apk add --no-cache \
-    curl \
-    bash \
-    bluez \
-    bluez-deprecated \
-    build-base \
-    python3-dev \
-    py3-pip \
-    linux-headers \
-    nodejs \
-    npm
+# Install system dependencies
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils \
+    bluetooth bluez bluez-hcidump libbluetooth-dev libudev-dev \
+    python3 python3-dev python3-pip python3-venv 
 
-# Upgrade pip and ensure distutils is available
-RUN pip install --no-cache-dir --upgrade pip setuptools
+# Upgrade pip and setuptools in a virtual environment
+RUN python3 -m venv /venv && \
+    /venv/bin/pip install --no-cache-dir --upgrade pip setuptools
 
-COPY . /src
+# Set the environment variable to use the virtual environment's Python and pip
+ENV PATH="/venv/bin:$PATH"
+
+
+COPY src/ /src
 # Install Node.js dependencies
 WORKDIR /src
 RUN npm install
@@ -36,5 +34,10 @@ COPY --from=build-stage /src /src
 WORKDIR /src
 RUN npm prune --production
 
+LABEL org.opencontainers.image.description=RESTBLUE
+LABEL org.opencontainers.image.source=https://github.com/datasance/restblue
+LABEL org.opencontainers.image.licenses=EPL2.0
+
 # Set the default command to run your app
 CMD ["node", "/src/index.js"]
+
